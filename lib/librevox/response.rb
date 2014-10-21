@@ -19,32 +19,20 @@ module Librevox
       @headers.each {|k,v| v.chomp! if v.is_a?(String)}
     end
 
-     def content= content
-
+    def content= content
       @content = if content.respond_to?(:match) && content.match(/:/)
-
                   headers_2_hash(content).merge(:body =>
-
-                        if content.split("\n\n", 2)[1].nil?
-
+                        unless content.split("\n\n", 2)[1].nil?
                                 content.split("\n\n", 2)[1].to_s
-
                         else
-
                                 content.to_s
-
                         end)
-
                  else
-
                   content
-
                  end
-
+    
       @content.each {|k,v| v.chomp! if v.is_a?(String)}
-
     end
-
 
     def event?
       @content.is_a?(Hash) && @content.include?(:event_name)
